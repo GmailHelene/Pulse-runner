@@ -3,14 +3,17 @@
 // Forbindelsesstrengen ligger i miljøvariabelen DATABASE_URL (settes i Vercel).
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
-
 export default async function handler(req, res) {
   // Åpent API for et offentlig spill — ingen hemmelige data sendes.
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(204).end();
+
+  if (!process.env.DATABASE_URL) {
+    return res.status(500).json({ error: 'DATABASE_URL er ikke satt i Vercel' });
+  }
+  const sql = neon(process.env.DATABASE_URL);
 
   try {
     // --- Hent spøkelser for en bane ---

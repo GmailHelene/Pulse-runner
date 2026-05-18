@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       const rows = await sql`
         SELECT name, path, time_ms FROM ghosts
         WHERE seed = ${seed} AND world = ${world} AND diff = ${diff}
-        ORDER BY time_ms ASC
+        ORDER BY created_at DESC
         LIMIT 5`;
       return res.status(200).json(rows);
     }

@@ -20,9 +20,12 @@
   #wrap { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
   canvas { background:#05060f; display:block; touch-action:none; }
   .overlay { position:absolute; inset:0; display:flex; flex-direction:column;
-    align-items:center; justify-content:safe center; text-align:center;
+    align-items:center; justify-content:flex-start; text-align:center;
     background:rgba(5,6,15,0.82); backdrop-filter:blur(4px); padding:18px; overflow-y:auto; }
   .hidden { display:none !important; }
+  /* Sentrerer innholdet vertikalt når det får plass, men lar toppen være
+     scrollbar når innholdet er høyere enn skjermen. Funker i alle nettlesere. */
+  .overlay::before, .overlay::after { content:''; flex:1; min-height:0; }
   #rotate { z-index:100; }
   .rotemoji { font-size:72px; margin-bottom:8px;
     animation:rothint 1.9s ease-in-out infinite; }
